@@ -19,10 +19,11 @@ class Paste(db.Model):
     def __repr__(self):
         return '<id {}>'.format(self.id)
 
-    def serialize(self):
+    def serialize(self, pasteData=None):
         return {
             'id': self.id,
             'url': self.url,
             'date': self.date,
-            'language': self.language
+            'language': self.language,
+            'pasteData': pasteData
         }

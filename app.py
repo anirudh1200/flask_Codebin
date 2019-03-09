@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, jsonify, send_file
+from flask import Flask, request, render_template, jsonify, send_file, redirect
 from flask_cors import CORS, cross_origin
 from models import db, Paste
 
@@ -57,12 +57,25 @@ def downloadAsTxt(url):
         return send_file(path, as_attachment=True)
     except Exception as e:
         print(e)
-        return jsonify({'success': 'false'})
+        return redirect('/error')
 
 
 @app.route('/d/view/<url>', methods=['GET'])
-def printurl(url):
-    return url
+def sendData(url):
+    filePath = 'files/' + url + '.txt'
+    try:
+        file = open(filePath, 'r')
+        pasteData = file.read()
+        file.close()
+    except Exception as e:
+        print(e)
+        return redirect('/error')
+    try:
+        foundPaste = Paste.query.filter_by(url=url).first()
+        return jsonify(foundPaste.serialize(pasteData))
+    except Exception as e:
+        print(str(e))
+        return redirect('/error')
 
 
 if __name__ == '__main__':
