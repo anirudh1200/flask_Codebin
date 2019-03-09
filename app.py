@@ -1,23 +1,27 @@
-from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
 import os
+from flask import Flask, request, render_template
+from models import db
+from models import Paste
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./build/static',template_folder='./build')
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-from models import Paste
+db.init_app(app)
 
 @app.route('/', methods=['GET'])
-def hello():
-    return 'Hello World'
+def index():
+    return render_template('index.html')
 
 
 @app.route('/d/upload', methods=['POST'])
 def geturl():
     url = request.form.get('url')
+    book = Paste(
+        url=url
+    )
+    db.session.add(book)
+    db.session.commit()
     return url
 
 
