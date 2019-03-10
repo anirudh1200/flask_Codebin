@@ -16,21 +16,27 @@ class DeleteItem extends Component {
 	handleDelete = () => {
 		let url = this.props.paste.url;
 		// development
-		// fetch(`http://localhost:5000/d/delete/${url}`)
+		// fetch(`http://localhost:5000/d/delete/`, {
 		// production
-		fetch(`/d/delete/${url}`)
+		fetch(`/d/delete/`, {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8"
+			},
+			body: JSON.stringify({ login: 'true', url })
+		})
 			.then(res => res.json())
 			.then(res => {
 				if (res.success) {
-					this.props.displayChip({type: 'success', displayText: 'Deleted Successfully !!'});
+					this.props.displayChip({ type: 'success', displayText: 'Deleted Successfully !!' });
 					this.props.handleDelete(url);
 				} else {
-					this.props.displayChip({type: 'fail'});
+					this.props.displayChip({ type: 'fail' });
 				}
 			})
 			.catch(err => {
 				console.log(err);
-				this.props.displayChip({type: 'fail'});
+				this.props.displayChip({ type: 'fail' });
 			});
 	}
 

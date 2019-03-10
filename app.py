@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, jsonify, send_file, redirect
 from flask_cors import CORS, cross_origin
 from models import db, Paste
+import pydf
 
 app = Flask(__name__, static_folder='./build/static',
             template_folder='./build')
@@ -76,6 +77,96 @@ def sendData(url):
     except Exception as e:
         print(str(e))
         return redirect('/error')
+
+
+@app.route('/d/edit', methods=['POST'])
+def editPaste():
+    url = request.get_json().get('url')
+    filePath = 'files/' + url + '.txt'
+    try:
+        file = open(filePath, 'w')
+        file.write(request.get_json().get('pasteData'))
+        file.close()
+        return jsonify({'success': 'true'})
+    except Exception as e:
+        print(e)
+        return redirect('/error')
+
+
+@app.route('/d/delete', methods=['POST'])
+def deletePaste():
+    url = request.get_json().get('url')
+    login = request.get_json().get('login')
+    if(login == 'true'):
+        try:
+            foundPaste = Paste.query.filter_by(url=url).delete()
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return redirect('/error')
+        try:
+            filePath = 'files/' + url + '.txt'
+            os.unlink(filePath)
+        except Exception as e:
+            print(e)
+        try:
+            pdfFilePath = 'files/' + url + '.pdf'
+            os.unlink(pdfFilePath)
+        except Exception as e:
+            print(e)
+        return jsonify({'success': 'true'})
+    else:
+        return jsonify({'success': 'false', 'reason': 'authentication failed'})
+
+
+@app.route('/d/pdf/<url>', methods=['GET'])
+def handlePdf(url):
+    if createPdf(url):
+        return handlePdfDownload(url)
+    return redirect('/error')
+
+
+@app.route('/d/pdf/<size>/<url>', methods=['GET'])
+def handlePdfDynamicSize(size, url):
+    if createPdf(url, size):
+        return handlePdfDownload(url)
+    return redirect('/error')
+
+
+def createPdf(url, size='15'):
+    filePath = 'files/' + url + '.txt'
+    try:
+        file = open(filePath, 'r')
+        pasteData = file.read()
+        file.close()
+        pdfFilePath = 'files/' + url + '.pdf'
+        pdf = pydf.generate_pdf('<p style="font-size:' +
+                                size+'px">'+pasteData+'</p>')
+        with open(pdfFilePath, 'wb') as f:
+            f.write(pdf)
+            f.close()
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+
+def handlePdfDownload(url):
+    pdfFilePath = 'files/' + url + '.pdf'
+    return send_file(pdfFilePath, as_attachment=True)
+
+
+@app.route('/auth/login', methods=['POST'])
+def authenticate():
+    username = request.get_json().get('username')
+    passwrod = request.get_json().get('password')
+    # for production
+    # if(username == os.environ.get('USERNAME') and password == os.environ.get('PASSWORD')):
+    # for development
+    if(username == 'dummy' and passwrod == 'dummy'):
+        return jsonify({'login': 'true'})
+    else:
+        return jsonify({'login': 'flase'})
 
 
 if __name__ == '__main__':
