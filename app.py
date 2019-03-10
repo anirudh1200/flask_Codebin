@@ -1,8 +1,9 @@
 import os
+import pydf
 from flask import Flask, request, render_template, jsonify, send_file, redirect
 from flask_cors import CORS, cross_origin
 from models import db, Paste
-import pydf
+from nocache import nocache
 
 app = Flask(__name__, static_folder='./build/static',
             template_folder='./build')
@@ -43,6 +44,7 @@ def geturl():
 
 
 @app.route('/d/getall', methods=['GET'])
+@nocache
 def getall():
     try:
         pastes = Paste.query.all()
@@ -52,6 +54,7 @@ def getall():
 
 
 @app.route('/d/<url>')
+@nocache
 def downloadAsTxt(url):
     try:
         path = 'files/' + url + '.txt'
@@ -62,6 +65,7 @@ def downloadAsTxt(url):
 
 
 @app.route('/d/view/<url>', methods=['GET'])
+@nocache
 def sendData(url):
     filePath = 'files/' + url + '.txt'
     try:
@@ -120,6 +124,7 @@ def deletePaste():
 
 
 @app.route('/d/pdf/<url>', methods=['GET'])
+@nocache
 def handlePdf(url):
     if createPdf(url):
         return handlePdfDownload(url)
@@ -127,6 +132,7 @@ def handlePdf(url):
 
 
 @app.route('/d/pdf/<size>/<url>', methods=['GET'])
+@nocache
 def handlePdfDynamicSize(size, url):
     if createPdf(url, size):
         return handlePdfDownload(url)
