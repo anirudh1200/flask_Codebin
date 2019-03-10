@@ -1,7 +1,7 @@
 import os
 import pydf
 from flask import Flask, request, render_template, jsonify, send_file, redirect
-from flask_cors import CORS, cross_origin
+# from flask_cors import CORS, cross_origin
 from models import db, Paste
 from nocache import nocache
 
@@ -10,8 +10,9 @@ app = Flask(__name__, static_folder='./build/static',
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+# for development
+# cors = CORS(app)
+# app.config['CORS_HEADERS'] = 'Content-Type'
 db.init_app(app)
 
 
@@ -165,11 +166,11 @@ def handlePdfDownload(url):
 @app.route('/auth/login', methods=['POST'])
 def authenticate():
     username = request.get_json().get('username')
-    passwrod = request.get_json().get('password')
+    password = request.get_json().get('password')
     # for production
-    # if(username == os.environ.get('USERNAME') and password == os.environ.get('PASSWORD')):
+    if(username == os.environ.get('USERNAME') and password == os.environ.get('PASSWORD')):
     # for development
-    if(username == 'dummy' and passwrod == 'dummy'):
+    # if(username == 'dummy' and passwrod == 'dummy'):
         return jsonify({'login': 'true'})
     else:
         return jsonify({'login': 'flase'})
