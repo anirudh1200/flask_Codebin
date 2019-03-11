@@ -27,6 +27,11 @@ def geturl():
     url = request.get_json().get('url')
     date = request.get_json().get('date')
     language = request.get_json().get('language')
+    foundPaste = Paste.query.filter_by(url=url).first()
+    print(foundPaste)
+    print(foundPaste is not None)
+    if foundPaste is not None:
+        return jsonify({'success': False, 'status': 'URL already exists'})
     file = open('files/' + url + '.txt', 'w')
     file.write(request.get_json().get('pasteData'))
     file.close()
@@ -38,10 +43,10 @@ def geturl():
         )
         db.session.add(newPaste)
         db.session.commit()
-        return jsonify({'success': 'true'})
+        return jsonify({'success': True})
     except Exception as e:
         print(e)
-        return jsonify({'success': 'false'})
+        return jsonify({'success': False})
 
 
 @app.route('/d/getall', methods=['GET'])
@@ -92,13 +97,13 @@ def editPaste():
         file = open(filePath, 'w')
         file.write(request.get_json().get('pasteData'))
         file.close()
-        return jsonify({'success': 'true'})
+        return jsonify({'success': True})
     except Exception as e:
         print(e)
         return redirect('/error')
 
 
-@app.route('/d/delete', methods=['POST'])
+@app.route('/d/delete/', methods=['POST'])
 def deletePaste():
     url = request.get_json().get('url')
     login = request.get_json().get('login')
@@ -119,9 +124,9 @@ def deletePaste():
             os.unlink(pdfFilePath)
         except Exception as e:
             print(e)
-        return jsonify({'success': 'true'})
+        return jsonify({'success': True})
     else:
-        return jsonify({'success': 'false', 'reason': 'authentication failed'})
+        return jsonify({'success': False, 'reason': 'authentication failed'})
 
 
 @app.route('/d/pdf/<url>', methods=['GET'])
@@ -170,10 +175,10 @@ def authenticate():
     # for production
     if(username == os.environ.get('USERNAME') and password == os.environ.get('PASSWORD')):
     # for development
-    # if(username == 'dummy' and passwrod == 'dummy'):
-        return jsonify({'login': 'true'})
+    # if(username == 'dummy' and password == 'dummy'):
+        return jsonify({'login': True})
     else:
-        return jsonify({'login': 'flase'})
+        return jsonify({'login': False})
 
 
 if __name__ == '__main__':
