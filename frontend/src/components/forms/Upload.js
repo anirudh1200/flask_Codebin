@@ -4,7 +4,6 @@ import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
-import formatDate from '../../utils/date';
 import AceEditor from '../editor/AceEditor';
 
 class UploadForm extends Component {
@@ -12,7 +11,6 @@ class UploadForm extends Component {
 	state = {
 		pasteData: '',
 		url: '',
-		date: formatDate(new Date()),
 		status: '',
 		language: 'plain_text',
 		editor: ''

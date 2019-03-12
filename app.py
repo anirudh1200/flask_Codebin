@@ -1,19 +1,30 @@
 import os
 import pydf
+import datetime
 from flask import Flask, request, render_template, jsonify, send_file, redirect
 # from flask_cors import CORS, cross_origin
+from werkzeug.utils import secure_filename
 from models import db, Paste
 from nocache import nocache
+
 
 app = Flask(__name__, static_folder='./build/static',
             template_folder='./build')
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
 # for development
 # cors = CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
 db.init_app(app)
+
+ALLOWED_EXTENSIONS = set([
+    'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'ppt', 'doc',
+    'docx', 'xlsx', 'xls', 'pptx', 'mp3', 'c', 'py', 'js',
+    'html', 'java', 'svg', 'tiff', 'php', 'cpp', 'mp4'
+])
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 @app.route('/', defaults={'path': ''}, methods=['GET'])
@@ -25,7 +36,6 @@ def index(path):
 @app.route('/d/upload', methods=['POST'])
 def geturl():
     url = request.get_json().get('url')
-    date = request.get_json().get('date')
     language = request.get_json().get('language')
     foundPaste = Paste.query.filter_by(url=url).first()
     print(foundPaste)
@@ -36,10 +46,12 @@ def geturl():
     file.write(request.get_json().get('pasteData'))
     file.close()
     try:
+        now = datetime.datetime.now()
         newPaste = Paste(
             url=url,
-            date=date,
-            language=language
+            date=now.strftime("%d-%m-%Y"),
+            language=language,
+            uploadType='code'
         )
         db.session.add(newPaste)
         db.session.commit()
@@ -117,13 +129,18 @@ def deletePaste():
         try:
             filePath = 'files/' + url + '.txt'
             os.unlink(filePath)
-        except Exception as e:
-            print(e)
+        except:
+            pass
+        try:
+            filePath = 'files/' + url
+            os.unlink(filePath)
+        except:
+            pass
         try:
             pdfFilePath = 'files/' + url + '.pdf'
             os.unlink(pdfFilePath)
-        except Exception as e:
-            print(e)
+        except:
+            pass
         return jsonify({'success': True})
     else:
         return jsonify({'success': False, 'reason': 'authentication failed'})
@@ -168,6 +185,45 @@ def handlePdfDownload(url):
     return send_file(pdfFilePath, as_attachment=True)
 
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/d/uploadfile/', methods=['POST'])
+def uploadFile():
+    f = request.files['file']
+    if allowed_file(f.filename):
+        try:
+            now = datetime.datetime.now()
+            newPaste = Paste(
+                url=f.filename,
+                date=now.strftime("%d-%m-%Y"),
+                language='none',
+                uploadType='file'
+            )
+            db.session.add(newPaste)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return redirect('/error')
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(APP_ROOT + '/files/')+filename)
+        return redirect('/')
+    else:
+        return redirect('/error')
+
+
+@app.route('/d/file/<url>', methods=['GET'])
+def downloadFile(url):
+    try:
+        path = 'files/' + url
+        return send_file(path, as_attachment=True)
+    except Exception as e:
+        print(e)
+        return redirect('/error')
+
+
 @app.route('/auth/login', methods=['POST'])
 def authenticate():
     username = request.get_json().get('username')
@@ -179,6 +235,11 @@ def authenticate():
         return jsonify({'login': True})
     else:
         return jsonify({'login': False})
+
+
+@app.errorhandler(413)
+def error413(e):
+    return 'File too large', 413
 
 
 if __name__ == '__main__':

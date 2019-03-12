@@ -10,11 +10,13 @@ class Paste(db.Model):
     url = db.Column(db.String())
     date = db.Column(db.String())
     language = db.Column(db.String())
+    uploadType = db.Column(db.String())
 
-    def __init__(self, url, date, language):
+    def __init__(self, url, date, language, uploadType):
         self.url = url
         self.date = date
         self.language = language
+        self.uploadType = uploadType
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -25,5 +27,6 @@ class Paste(db.Model):
             'url': self.url,
             'date': self.date,
             'language': self.language,
-            'pasteData': pasteData
+            'pasteData': pasteData,
+            'uploadType': self.uploadType
         }

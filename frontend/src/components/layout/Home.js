@@ -10,6 +10,9 @@ const Home = props => {
 	const redirectToUpload = () => {
 		props.history.push('/uploadform');
 	}
+	const redirectToUploadFile = () => {
+		props.history.push('/uploadfile');
+	}
 	return (
 		<Fragment>
 			<div style={{
@@ -61,7 +64,27 @@ const Home = props => {
 					}}
 				>
 					<NavigationIcon size='large' />
-					Upload
+					Upload Code
+				</Fab>
+				<Fab
+					variant="extended"
+					aria-label="Delete"
+					onClick={redirectToUploadFile}
+					size='large'
+					style={{
+						backgroundColor,
+						color: 'white',
+						fontSize: '1.5em',
+						minHeight: '50px',
+						minWidth: '120px',
+						marginTop: '2%',
+						display: "block",
+						marginLeft: "auto",
+						marginRight: "auto"
+					}}
+				>
+					<NavigationIcon size='large' />
+					Upload File
 				</Fab>
 			</div>
 		</Fragment>

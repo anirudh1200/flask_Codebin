@@ -61,7 +61,7 @@ export default class DeleteModal extends React.Component {
 	}
 
 	render() {
-		let warning = <span style={{color: 'red', fontSize: '1em', marginLeft: '5%'}}>{this.state.status}</span>
+		let warning = <span style={{ color: 'red', fontSize: '1em', marginLeft: '5%' }}>{this.state.status}</span>
 		return (
 			<div>
 				<Dialog
@@ -95,7 +95,7 @@ export default class DeleteModal extends React.Component {
 					<DialogActions>
 						<Button onClick={this.handleLogin} color="primary">
 							Login
-            </Button>
+            			</Button>
 					</DialogActions>
 				</Dialog>
 			</div>
