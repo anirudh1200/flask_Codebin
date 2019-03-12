@@ -13,7 +13,7 @@ app = Flask(__name__, static_folder='./build/static',
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 # for development
 # cors = CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
@@ -38,8 +38,6 @@ def geturl():
     url = request.get_json().get('url')
     language = request.get_json().get('language')
     foundPaste = Paste.query.filter_by(url=url).first()
-    print(foundPaste)
-    print(foundPaste is not None)
     if foundPaste is not None:
         return jsonify({'success': False, 'status': 'URL already exists'})
     file = open('files/' + url + '.txt', 'w')
@@ -194,6 +192,9 @@ def allowed_file(filename):
 def uploadFile():
     f = request.files['file']
     if allowed_file(f.filename):
+        foundPaste = Paste.query.filter_by(url=f.filename).first()
+        if foundPaste is not None:
+            return redirect('/error')
         try:
             now = datetime.datetime.now()
             newPaste = Paste(

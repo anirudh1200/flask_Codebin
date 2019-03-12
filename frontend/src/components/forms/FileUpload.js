@@ -29,7 +29,7 @@ export default class FileUpload extends Component {
 						<DialogContentText>
 							Choose and file and submit
             			</DialogContentText>
-						<form action="https://codebinnn.herokuapp.com/d/uploadfile/" method="POST"
+						<form action="http://localhost:5000/d/uploadfile/" method="POST"
 							encType="multipart/form-data">
 							<input type="file" name="file" />
 							<input type="submit" id="submitBtn" style={{ display: 'none' }} />

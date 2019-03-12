@@ -3,7 +3,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import grey from '@material-ui/core/colors/grey';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import CodeIcon from '@material-ui/icons/Code';
@@ -75,7 +74,7 @@ class IndivisualItem extends Component {
 			>
 				<ListItemAvatar>
 					< Avatar>
-						<AssignmentIcon />
+						<CodeIcon />
 					</Avatar>
 				</ListItemAvatar>
 				<ListItemText

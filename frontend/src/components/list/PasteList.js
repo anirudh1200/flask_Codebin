@@ -33,7 +33,6 @@ class PasteList extends Component {
 		let backgroundColor = grey[900];
 		let headingStyle = { width: '8%', padding: 'auto', textAlign: 'center' };
 		let list = this.state.pasteList.map((paste, i) => {
-			console.log(paste.uploadType)
 			if (paste.uploadType === 'code') {
 				return (
 					<IndivisualItem
