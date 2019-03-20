@@ -80,7 +80,7 @@ class Dropdown extends React.Component {
 	render() {
 		const { anchorEl } = this.state;
 		const open = Boolean(anchorEl);
-
+		let color = 'white';
 		return (
 			<div>
 				<Button
@@ -88,6 +88,7 @@ class Dropdown extends React.Component {
 					aria-owns={open ? 'long-menu' : undefined}
 					aria-haspopup="true"
 					onClick={this.handleClick}
+					style={{ color }}
 				>
 					{this.state.language}
 				</Button>

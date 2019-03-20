@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import grey from '@material-ui/core/colors/grey';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import Fab from '@material-ui/core/Fab';
@@ -22,14 +21,14 @@ const styles = {
 function SimpleAppBar(props) {
   const [count, setCount] = useState('');
   const { classes } = props;
-  let backgroundColor = grey[900];
+  let backgroundColor = '#080809';
   const handleClose = () => setCount('');
   return (
     <div className={classes.root}>
-      <AppBar position="static" style={{ backgroundColor }}>
+      <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
         <Toolbar className={classes.root}>
           <Link to='/' style={{ textDecoration: 'none' }}>
-            <Typography variant="h6" style={{ color: 'white', letterSpacing: '0.5em', fontSize: '1.5em' }}>
+            <Typography variant="h6" style={{ color: 'white', letterSpacing: '0.2em', fontSize: '1.5em' }}>
               CODEBIN
             </Typography>
           </Link>
@@ -38,12 +37,12 @@ function SimpleAppBar(props) {
               <ListIcon style={{ color: 'white' }} />
             </Fab>
           </Link>
-            <Fab
-              aria-label="Add"
-              style={{ position: 'absolute', fontSize: '1.2em', right: '8%', top: '5%', backgroundColor, color: 'white' }}
-              onClick={() => setCount(<Info handleClose={handleClose} />)}
-            >
-              ℹ
+          <Fab
+            aria-label="Add"
+            style={{ position: 'absolute', fontSize: '1.2em', right: '8%', top: '5%', backgroundColor, color: 'white' }}
+            onClick={() => setCount(<Info handleClose={handleClose} />)}
+          >
+            ℹ
             </Fab>
           <Link to='/uploadform' style={{ margin: 0, padding: 0 }}>
             <Fab aria-label="Add" style={{ position: 'absolute', right: '4%', top: '5%', backgroundColor }}>

@@ -13,7 +13,6 @@ export default class FileUpload extends Component {
 
 	handleClose = () => {
 		this.setState({ open: false });
-		this.props.history.push('/');
 	};
 
 	render() {
@@ -37,6 +36,9 @@ export default class FileUpload extends Component {
 					</DialogContent>
 					{warning}
 					<DialogActions>
+						<Button onClick={this.handleClose} color="primary">
+							Cancel
+            			</Button>
 						<Button
 							onClick={() => {
 								let submitBtn = document.getElementById('submitBtn');
@@ -45,9 +47,6 @@ export default class FileUpload extends Component {
 							color="primary"
 						>
 							Submit
-            			</Button>
-						<Button onClick={this.handleClose} color="primary">
-							Cancel
             			</Button>
 					</DialogActions>
 				</Dialog>

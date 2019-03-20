@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
-import grey from '@material-ui/core/colors/grey';
 import AceEditor from '../editor/AceEditor';
 
 class View extends Component {
@@ -41,11 +40,12 @@ class View extends Component {
 	}
 
 	render() {
+		let color = 'white';
 		return (
 			<Fragment>
 				<Typography
 					variant="h4"
-					style={{ width: '100%', margin: '1% 0%', textAlign: 'center', color: grey[800] }}
+					style={{ width: '100%', margin: '1% 0%', textAlign: 'center', color, fontFamily: "Roboto" }}
 				>
 					{this.state.url}
 				</Typography>

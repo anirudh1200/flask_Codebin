@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import Typography from '@material-ui/core/Typography';
-import grey from '@material-ui/core/colors/grey';
 import AceEditor from '../editor/AceEditor';
+import PropTypes from 'prop-types';
 
 class UploadForm extends Component {
 
@@ -97,14 +98,17 @@ class UploadForm extends Component {
 	}
 
 	render() {
+		const { classes } = this.props;
+		let color = 'white';
+		let backgroundColor = '#080809';
 		return (
 			<Fragment>
 				<Typography
 					variant="h4"
-					style={{ width: '100%', margin: '1% 0%', textAlign: 'center', color: grey[800] }}
+					style={{ width: '100%', margin: '1% 0%', textAlign: 'center', color, fontFamily: "Roboto" }}
 				>
 					Upload Your Paste
-        </Typography>
+       			</Typography>
 				<form autoComplete="off" style={{ width: '90%', margin: '0% 5%' }}>
 					<AceEditor
 						initialValue={''}
@@ -120,6 +124,18 @@ class UploadForm extends Component {
 						value="codebinn.herokuapp.com/d/"
 						margin="normal"
 						style={{ maxWidth: '62%', width: '210px' }}
+						InputLabelProps={{
+							classes: {
+								root: classes.cssLabel,
+							},
+						}}
+						InputProps={{
+							classes: {
+								input: classes.multilineColor,
+								root: classes.cssOutlinedInput,
+								underline: classes.underline
+							}
+						}}
 					/>
 					<TextField
 						id="standard-name"
@@ -129,21 +145,37 @@ class UploadForm extends Component {
 						onChange={this.handleChange}
 						margin="none"
 						style={{ maxWidth: '36%' }}
+						InputLabelProps={{
+							classes: {
+								root: classes.cssLabel,
+								focused: classes.cssFocused,
+							},
+						}}
+						InputProps={{
+							classes: {
+								input: classes.multilineColor,
+								root: classes.cssOutlinedInput,
+								focused: classes.cssFocused,
+								notchedOutline: classes.notchedOutline,
+								underline: classes.underline
+							}
+						}}
 					/>
 					<div style={{ marginTop: '2%', textAlign: 'center', marginBottom: '30px' }}>
 						<div style={{ color: 'red' }}>{this.state.status}</div>
-						<Fab
-							variant="extended"
-							aria-label="Delete"
+						<Button
 							onClick={this.handleSubmit}
 							style={{
-								color: grey[50],
-								backgroundColor: grey[800]
+								color,
+								backgroundColor,
+								fontFamily: "Roboto",
+								textTransform: 'none',
+								fontSize: '1.3em',
 							}}
 						>
-							<NavigationIcon style={{ color: grey[50] }} />
-							Upload
-            </Fab>
+							<NavigationIcon />
+							upload
+            			</Button>
 					</div>
 				</form>
 			</Fragment>
@@ -151,4 +183,39 @@ class UploadForm extends Component {
 	}
 }
 
-export default UploadForm;
+const styles = theme => ({
+	multilineColor: {
+		color: 'white',
+		borderColor: 'white',
+	},
+	cssLabel: {
+		color: 'white',
+		'&$cssFocused': {
+			color: 'white',
+			borderColor: 'white',
+		},
+	},
+	cssFocused: {},
+	cssOutlinedInput: {
+		color: 'white',
+		'&$cssFocused $notchedOutline': {
+			borderColor: 'white',
+		},
+	},
+	notchedOutline: {
+		color: 'white'
+	},
+	underline: {
+		color: 'white',
+		'&:after': {
+			borderBottom: '2px solid white',
+
+		},
+	}
+});
+
+UploadForm.propTypes = {
+	classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(UploadForm);

@@ -13,7 +13,6 @@ import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import Avatar from '@material-ui/core/Avatar';
 import grey from '@material-ui/core/colors/grey';
-import FileUpload from './components/forms/FileUpload';
 
 class App extends Component {
 
@@ -45,8 +44,9 @@ class App extends Component {
   }
 
   render() {
+    let backgroundColor = '#080809';
     return (
-      <div className="App">
+      <div className="App" style={{ backgroundColor, height: '100vh'}}>
         <Navbar />
         <Switch>
           <Route exact path='/' component={Home} />
@@ -58,10 +58,6 @@ class App extends Component {
             render={(routeProps) => (<UploadForm {...routeProps} displayChip={this.displayChip} />)}
           />
           <Route
-            exact path='/uploadfile'
-            render={(routeProps) => (<FileUpload {...routeProps} displayChip={this.displayChip} />)}
-          />
-          <Route
             path='/edit'
             render={(routeProps) => (<Edit {...routeProps} displayChip={this.displayChip} />)}
           />
@@ -71,10 +67,6 @@ class App extends Component {
             displayChip={this.displayChip}
           />
         </Switch>
-        <span style={{ position: 'fixed', bottom: 0 }}>
-          Made with
-          <span role="img" aria-label="heart"> ❤️ </span>
-        </span>
         <span style={{ width: '100%', position: 'fixed', bottom: '5%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           {this.state.chip}
         </span>

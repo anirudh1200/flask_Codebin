@@ -1,25 +1,26 @@
-import React, { Fragment } from 'react';
-import Fab from '@material-ui/core/Fab';
-import grey from '@material-ui/core/colors/grey';
+import React, { Fragment, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
-import NavigationIcon from '@material-ui/icons/Navigation';
-import backgroundImage from '../../background.jpg';
+import Button from '@material-ui/core/Button';
+import CodeIcon from '@material-ui/icons/Code';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import Typed from 'react-typed';
+import FileUpload from '../forms/FileUpload';
 
 const Home = props => {
-	let backgroundColor = grey[900];
+	const [opacity, setOpacity] = useState(0);
+	const [uploadFile, setUploadFile] = useState('');
+	const [transformL, setTransformL] = useState('-800');
+	const [transformR, setTransformR] = useState('800');
+	setTimeout(() => setOpacity(1), 50);
+	setTimeout(() => setTransformL('0'), 50);
+	setTimeout(() => setTransformR('0'), 50);
+	let backgroundColor = '#080809';
 	const redirectToUpload = () => {
 		props.history.push('/uploadform');
-	}
-	const redirectToUploadFile = () => {
-		props.history.push('/uploadfile');
 	}
 	return (
 		<Fragment>
 			<div style={{
-				backgroundImage: `url(${backgroundImage})`,
-				backgroundRepeat: 'no-repeat',
-				backgroundSize: 'cover',
-				height: '91vh',
 				position: 'flexible',
 				top: '8%',
 				bottom: 0,
@@ -30,63 +31,83 @@ const Home = props => {
 					align="center"
 					variant="h2"
 					style={{
-						fontFamily: "Major Mono Display",
-						fontSize: "10vh",
+						color: 'white',
+						fontFamily: "Roboto",
+						fontSize: "12.5vh",
 						marginBottom: 15,
 						paddingTop: "30vh",
-						fontWeight: 'bold'
+						fontWeight: 'bold',
+						letterSpacing: '0.03em'
 					}}
 				>
-					codebin
-        </Typography>
+					<Typed
+						strings={['codebin']}
+						typeSpeed={150}
+					/>
+				</Typography>
 				<Typography
 					align="center"
 					variant="h6"
-					style={{ fontFamily: "Major Mono Display" }}
+					style={{ fontFamily: "Roboto", color: 'white', fontSize: "3vh", opacity, transition: 'opacity 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19)' }}
 				>
 					enjoy the ease of sharing
         </Typography>
-				<Fab
-					variant="extended"
-					aria-label="Delete"
+				<Button
 					onClick={redirectToUpload}
 					size='large'
 					style={{
 						backgroundColor,
 						color: 'white',
-						fontSize: '1.5em',
+						fontSize: '2em',
 						minHeight: '50px',
 						minWidth: '120px',
 						marginTop: '2%',
-						display: "block",
 						marginLeft: "auto",
-						marginRight: "auto"
+						marginRight: "auto",
+						fontFamily: "Roboto",
+						textTransform: "none",
+						display: "flex",
+						justifyContent: "center",
+						flexDirection: "column",
+						textAlign: "center",
+						transform: 'translateX(' + transformL + 'px)',
+						transition: 'transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 2.5s cubic-bezier(0.39, 0.575, 0.565, 1)',
+						opacity
 					}}
 				>
-					<NavigationIcon size='large' />
-					Upload Code
-				</Fab>
-				<Fab
-					variant="extended"
-					aria-label="Delete"
-					onClick={redirectToUploadFile}
+					<CodeIcon />
+					upload code
+				</Button>
+				<Button
+					onClick={() => {
+						console.log('a');
+						setUploadFile(<FileUpload />)
+					}}
 					size='large'
 					style={{
 						backgroundColor,
 						color: 'white',
-						fontSize: '1.5em',
+						fontSize: '2em',
 						minHeight: '50px',
 						minWidth: '120px',
-						marginTop: '2%',
-						display: "block",
 						marginLeft: "auto",
-						marginRight: "auto"
+						marginRight: "auto",
+						fontFamily: "Roboto",
+						textTransform: "none",
+						display: "flex",
+						justifyContent: "center",
+						flexDirection: "column",
+						textAlign: "center",
+						transform: 'translateX(' + transformR + 'px)',
+						transition: 'transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 2.5s cubic-bezier(0.39, 0.575, 0.565, 1)',
+						opacity
 					}}
 				>
-					<NavigationIcon size='large' />
-					Upload File
-				</Fab>
+					<AssignmentIcon />
+					upload File
+				</Button>
 			</div>
+			{uploadFile}
 		</Fragment>
 	);
 }

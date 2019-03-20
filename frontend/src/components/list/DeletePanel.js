@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -50,7 +50,7 @@ class DeletePanel extends Component {
 			)
 		});
 		return (
-			<Fragment>
+			<div style={{backgroundColor: '#fafaff', height: '100%'}}>
 				<DeleteModal />
 				<div style={{ margin: '0% 5%' }}>
 					<List style={{ width: '100%' }}>
@@ -68,7 +68,7 @@ class DeletePanel extends Component {
 						<AddIcon fontSize="large" />
 					</Fab>
 				</div>
-			</Fragment>
+			</div>
 		)
 	}
 }

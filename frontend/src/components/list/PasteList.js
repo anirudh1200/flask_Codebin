@@ -52,24 +52,26 @@ class PasteList extends Component {
 			}
 		});
 		return (
-			<div style={{ margin: '0% 5%' }}>
-				<List style={{ width: '100%' }}>
-					<ListItem>
-						<ListItemText />
-						<p style={headingStyle}>Edit</p>
-						<p style={headingStyle}>View</p>
-						<p style={headingStyle}>.txt</p>
-						<p style={headingStyle}>.pdf</p>
-					</ListItem>
-					{list}
-				</List>
-				<Fab
-					aria-label="Add"
-					style={{ position: 'fixed', bottom: '10%', right: '5%', backgroundColor, color: 'white' }}
-					onClick={this.redirectToUpload}
-				>
-					<AddIcon fontSize="large" />
-				</Fab>
+			<div style={{backgroundColor: '#fafaff', height: '100%'}}>
+				<div style={{ margin: '0% 5%' }}>
+					<List style={{ width: '100%' }}>
+						<ListItem>
+							<ListItemText />
+							<p style={headingStyle}>Edit</p>
+							<p style={headingStyle}>View</p>
+							<p style={headingStyle}>.txt</p>
+							<p style={headingStyle}>.pdf</p>
+						</ListItem>
+						{list}
+					</List>
+					<Fab
+						aria-label="Add"
+						style={{ position: 'fixed', bottom: '10%', right: '5%', backgroundColor, color: 'white' }}
+						onClick={this.redirectToUpload}
+					>
+						<AddIcon fontSize="large" />
+					</Fab>
+				</div>
 			</div>
 		)
 	}

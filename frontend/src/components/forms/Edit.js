@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import Typography from '@material-ui/core/Typography';
-import grey from '@material-ui/core/colors/grey';
 import AceEditor from '../editor/AceEditor';
 
 class Edit extends Component {
@@ -42,7 +41,7 @@ class Edit extends Component {
 	}
 
 	upload = () => {
-		let {dropdown, editor, ...data} = this.state;
+		let { dropdown, editor, ...data } = this.state;
 		fetch("/d/edit", {
 			method: 'POST',
 			headers: {
@@ -74,11 +73,13 @@ class Edit extends Component {
 	}
 
 	render() {
+		let color = 'white';
+		let backgroundColor = '#080809';
 		return (
 			<Fragment>
 				<Typography
 					variant="h4"
-					style={{ width: '100%', margin: '1% 0%', textAlign: 'center', color: grey[800] }}
+					style={{ width: '100%', margin: '1% 0%', textAlign: 'center', color, fontFamily: "Roboto" }}
 				>
 					Update {this.state.url}
 				</Typography>
@@ -93,18 +94,19 @@ class Edit extends Component {
 					/>
 					<div style={{ marginTop: '2%', textAlign: 'center', marginBottom: '30px' }}>
 						<div style={{ color: 'red' }}>{this.state.status}</div>
-						<Fab
-							variant="extended"
-							aria-label="Delete"
+						<Button
 							onClick={this.handleSubmit}
 							style={{
-								color: grey[50],
-								backgroundColor: grey[800]
+								color,
+								backgroundColor,
+								fontFamily: "Roboto",
+								textTransform: 'none',
+								fontSize: '1.3em',
 							}}
 						>
-							<NavigationIcon style={{ color: grey[50] }} />
-							Update
-            </Fab>
+							<NavigationIcon style={{ color }} />
+							update
+            			</Button>
 					</div>
 				</form>
 			</Fragment>

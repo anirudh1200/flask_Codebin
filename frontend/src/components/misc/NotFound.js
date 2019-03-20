@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import backgroundImage from '../../background.jpg';
 import Typography from '@material-ui/core/Typography';
 
 class NotFound extends Component {
@@ -15,9 +14,6 @@ class NotFound extends Component {
 	render() {
 		return (
 			<div style={{
-				backgroundImage: `url(${backgroundImage})`,
-				backgroundRepeat: 'no-repeat',
-				backgroundSize: 'cover',
 				height: '91vh',
 				position: 'flexible',
 				top: '8%',
