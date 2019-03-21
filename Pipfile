@@ -32,6 +32,7 @@ python-pdf = "*"
 six = "*"
 SQLAlchemy = "*"
 Werkzeug = "*"
+passlib = "*"
 
 [requires]
 python_version = "3.6"

@@ -4,7 +4,7 @@ import datetime
 from flask import Flask, request, render_template, jsonify, send_file, redirect
 # from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
-from models import db, Paste
+from models import db, Paste, User
 from nocache import nocache
 
 
@@ -225,17 +225,29 @@ def downloadFile(url):
         return redirect('/error')
 
 
-@app.route('/auth/login', methods=['POST'])
-def authenticate():
+@app.route('/auth/signin', methods=['POST'])
+def signin():
     username = request.get_json().get('username')
     password = request.get_json().get('password')
-    # for production
-    if(username == os.environ.get('USERNAME') and password == os.environ.get('PASSWORD')):
-    # for development
-    # if(username == 'dummy' and password == 'dummy'):
-        return jsonify({'login': True})
-    else:
+    if username is None or password is None:
+        abort(400)
+    if User.query.filter_by(username=username).first() is not None:
+        return jsonify({'success': False, 'warning': 'username already exists'})
+    user = User(username=username)
+    user.hash_password(password)
+    db.session.add(User)
+    db.session.commit()
+    return jsonify({'success': True})
+
+
+@app.route('/auth/login', methods=['POST'])
+def verify_password():
+    username = request.get_json().get('username')
+    password = request.get_json().get('password')
+    user = User.query.filter_by(username=username).first()
+    if not user or not user.verify_password(password):
         return jsonify({'login': False})
+    return jsonify({'login': True})
 
 
 @app.errorhandler(413)

@@ -23,14 +23,14 @@ function SimpleAppBar(props) {
   const { classes } = props;
   let backgroundColor = '#080809';
   const handleClose = () => setCount('');
-  let right = window.innerWidth>600 ? ['12%', '8%', '4%'] : ['16%', '100%', '5%'];
+  let right = window.innerWidth > 600 ? ['12%', '8%', '4%'] : ['16%', '100%', '5%'];
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
         <Toolbar className={classes.root}>
           <Link to='/' style={{ textDecoration: 'none' }}>
-            <Typography variant="h6" style={{ color: 'white', letterSpacing: '0.2em', fontSize: '1.5em' }}>
-              CODEBIN
+            <Typography variant="h6" style={{ color: 'white', letterSpacing: '0.1em', fontSize: '1.5em', fontWeight: 'bold', fontFamily: 'Roboto' }}>
+              codebin
             </Typography>
           </Link>
           <Link to='/panel' style={{ margin: 0, padding: 0 }}>
