@@ -5,8 +5,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { connect } from 'react-redux';
 
-export default class FileUpload extends Component {
+class FileUpload extends Component {
 	state = {
 		open: true
 	};
@@ -28,9 +29,10 @@ export default class FileUpload extends Component {
 						<DialogContentText>
 							Choose and file and submit
             			</DialogContentText>
-						<form action="http://codebinnn.herokuapp.com/d/uploadfile/" method="POST"
+						<form action="http://localhost:5000/d/uploadfile/" method="POST"
 							encType="multipart/form-data">
 							<input type="file" name="file" />
+							<input type="text" name="username" value={this.props.username} style={{display: 'none'}} />
 							<input type="submit" id="submitBtn" style={{ display: 'none' }} />
 						</form>
 					</DialogContent>
@@ -54,3 +56,11 @@ export default class FileUpload extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => {
+	return{
+		username: state.username
+	}
+}
+
+export default connect(mapStateToProps)(FileUpload);

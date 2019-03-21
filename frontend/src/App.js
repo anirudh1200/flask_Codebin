@@ -7,7 +7,6 @@ import Home from './components/layout/Home';
 import NotFound from './components/misc/NotFound';
 import View from './components/forms/View';
 import Edit from './components/forms/Edit';
-import DeletePanel from './components/list/DeletePanel';
 import Chip from '@material-ui/core/Chip';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -48,18 +47,21 @@ class App extends Component {
   render() {
     let backgroundColor = '#080809';
     return (
-      <div className="App" style={{ backgroundColor, height: '100vh'}}>
+      <div className="App" style={{ backgroundColor, height: '100vh' }}>
         <Navbar />
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/view' component={View} />
           <Route exact path='/error' component={NotFound} />
-          <Route exact path='/panel' component={PasteList} />
+          <Route
+            exact path='/panel'
+            render={(routeProps) => (<PasteList {...routeProps} displayChip={this.displayChip} />)}
+          />
           <Route
             exact path='/login'
             render={(routeProps) => (<Login {...routeProps} displayChip={this.displayChip} />)}
           />
-                    <Route
+          <Route
             exact path='/signin'
             render={(routeProps) => (<Signin {...routeProps} displayChip={this.displayChip} />)}
           />
@@ -70,11 +72,6 @@ class App extends Component {
           <Route
             path='/edit'
             render={(routeProps) => (<Edit {...routeProps} displayChip={this.displayChip} />)}
-          />
-          <Route
-            path='/delete'
-            render={(routeProps) => (<DeletePanel {...routeProps} displayChip={this.displayChip} />)}
-            displayChip={this.displayChip}
           />
         </Switch>
         <span style={{ width: '100%', position: 'fixed', bottom: '5%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

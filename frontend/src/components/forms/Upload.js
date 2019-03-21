@@ -6,6 +6,7 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 import Typography from '@material-ui/core/Typography';
 import AceEditor from '../editor/AceEditor';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class UploadForm extends Component {
 
@@ -14,7 +15,8 @@ class UploadForm extends Component {
 		url: '',
 		status: '',
 		language: 'plain_text',
-		editor: ''
+		editor: '',
+		username: this.props.username
 	}
 
 	handleChange = e => {
@@ -214,4 +216,10 @@ UploadForm.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(UploadForm);
+const mapStateToProps = state => {
+	return{
+		username: state.username
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(UploadForm));

@@ -37,6 +37,7 @@ def index(path):
 def geturl():
     url = request.get_json().get('url')
     language = request.get_json().get('language')
+    username = request.get_json().get('username')
     foundPaste = Paste.query.filter_by(url=url).first()
     if foundPaste is not None:
         return jsonify({'success': False, 'status': 'URL already exists'})
@@ -49,7 +50,8 @@ def geturl():
             url=url,
             date=now.strftime("%d-%m-%Y"),
             language=language,
-            uploadType='code'
+            uploadType='code',
+            username=username
         )
         db.session.add(newPaste)
         db.session.commit()
@@ -197,11 +199,14 @@ def uploadFile():
             return redirect('/error')
         try:
             now = datetime.datetime.now()
+            username = request.form['username']
+            print('username', username)
             newPaste = Paste(
                 url=f.filename,
                 date=now.strftime("%d-%m-%Y"),
                 language='none',
-                uploadType='file'
+                uploadType='file',
+                username=username
             )
             db.session.add(newPaste)
             db.session.commit()

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -7,6 +7,7 @@ import grey from '@material-ui/core/colors/grey';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import CodeIcon from '@material-ui/icons/Code';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class IndivisualItem extends Component {
 
@@ -48,6 +49,33 @@ class IndivisualItem extends Component {
 		}
 	}
 
+	handleDelete = () => {
+		let url = this.props.paste.url;
+		// development
+		// fetch(`http://localhost:5000/d/delete/`, {
+		// production
+		fetch(`/d/delete/`, {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8"
+			},
+			body: JSON.stringify({ login: 'true', url })
+		})
+			.then(res => res.json())
+			.then(res => {
+				if (res.success) {
+					this.props.displayChip({ type: 'success', displayText: 'Deleted Successfully !!' });
+					this.props.handleDelete(url);
+				} else {
+					this.props.displayChip({ type: 'fail' });
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				this.props.displayChip({ type: 'fail' });
+			});
+	}
+
 	redirect = (location) => {
 		let url = this.props.paste.url;
 		this.props.history.push(`/` + location + `/${url}`);
@@ -66,6 +94,21 @@ class IndivisualItem extends Component {
 		let listItemStyle;
 		this.state.isHovered ? (listItemStyle = { backgroundColor: grey[200], margin: '0.5%' }) : (listItemStyle = { margin: '0.5%' });
 		let iconStyle = { width: '8%', margin: 'auto' };
+		let editAndDelete = null;
+		if (paste.username === this.props.username) {
+			editAndDelete = (
+				<Fragment>
+					<DeleteIcon
+						style={iconStyle}
+						onClick={this.handleDelete}
+					/>
+					<CodeIcon
+						style={iconStyle}
+						onClick={() => this.redirect('edit')}
+					/>
+				</Fragment>
+			)
+		}
 		return (
 			<ListItem
 				style={listItemStyle}
@@ -82,10 +125,7 @@ class IndivisualItem extends Component {
 					primary={paste.url}
 					secondary={paste.date}
 				/>
-				<CodeIcon
-					style={iconStyle}
-					onClick={() => this.redirect('edit')}
-				/>
+				{editAndDelete}
 				<VisibilityIcon
 					style={iconStyle}
 					onClick={() => this.redirect('view')}

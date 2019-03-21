@@ -6,7 +6,7 @@ import IndivisualItem from './IndivisualItem';
 import IndivisualFile from './IndivisualFile';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import grey from '@material-ui/core/colors/grey';
+import { connect } from 'react-redux';
 
 class PasteList extends Component {
 
@@ -29,8 +29,15 @@ class PasteList extends Component {
 		this.props.history.push('/uploadform');
 	}
 
+	handleDelete = (url) => {
+		let newPasteList = this.state.pasteList.filter(paste => {
+			return paste.url !== url
+		});
+		this.setState({ pasteList: newPasteList });
+	}
+
 	render() {
-		let backgroundColor = grey[900];
+		let backgroundColor = '#080809';
 		let headingStyle = { width: '8%', padding: 'auto', textAlign: 'center' };
 		let list = this.state.pasteList.map((paste, i) => {
 			if (paste.uploadType === 'code') {
@@ -39,6 +46,8 @@ class PasteList extends Component {
 						paste={paste}
 						key={i}
 						history={this.props.history}
+						username={this.props.username}
+						displayChip={this.props.displayChip}
 					/>
 				)
 			} else {
@@ -47,16 +56,20 @@ class PasteList extends Component {
 						paste={paste}
 						key={i}
 						history={this.props.history}
+						username={this.props.username}
+						displayChip={this.props.displayChip}
+						handleDelete={this.handleDelete}
 					/>
 				)
 			}
 		});
 		return (
-			<div style={{backgroundColor: '#fafaff', height: '100%'}}>
+			<div style={{ backgroundColor: '#fafaff', height: '100%' }}>
 				<div style={{ margin: '0% 5%' }}>
 					<List style={{ width: '100%' }}>
 						<ListItem>
 							<ListItemText />
+							<p style={headingStyle}>Delete</p>
 							<p style={headingStyle}>Edit</p>
 							<p style={headingStyle}>View</p>
 							<p style={headingStyle}>.txt</p>
@@ -77,4 +90,10 @@ class PasteList extends Component {
 	}
 }
 
-export default PasteList;
+const mapStateToProps = state => {
+	return {
+		username: state.username
+	}
+}
+
+export default connect(mapStateToProps)(PasteList);

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import grey from '@material-ui/core/colors/grey';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class IndivisualFile extends Component {
 
@@ -29,6 +29,33 @@ class IndivisualFile extends Component {
 			.catch(console.log);
 	}
 
+	handleDelete = () => {
+		let url = this.props.paste.url;
+		// development
+		// fetch(`http://localhost:5000/d/delete/`, {
+		// production
+		fetch(`/d/delete/`, {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8"
+			},
+			body: JSON.stringify({ login: 'true', url })
+		})
+			.then(res => res.json())
+			.then(res => {
+				if (res.success) {
+					this.props.displayChip({ type: 'success', displayText: 'Deleted Successfully !!' });
+					this.props.handleDelete(url);
+				} else {
+					this.props.displayChip({ type: 'fail' });
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				this.props.displayChip({ type: 'fail' });
+			});
+	}
+
 	redirect = (location) => {
 		let url = this.props.paste.url;
 		this.props.history.push(`/` + location + `/${url}`);
@@ -45,8 +72,18 @@ class IndivisualFile extends Component {
 	render() {
 		const { paste } = this.props;
 		let listItemStyle;
-		this.state.isHovered ? (listItemStyle = { backgroundColor: grey[200], margin: '0.5%' }) : (listItemStyle = { margin: '0.5%' });
-		let iconStyle = { width: '32%', margin: 'auto' };
+		this.state.isHovered ? (listItemStyle = { backgroundColor: '#eeeeee', margin: '0.5%' }) : (listItemStyle = { margin: '0.5%' });
+		let editAndDelete = null;
+		if (paste.username === this.props.username) {
+			editAndDelete = (
+				<Fragment>
+					<DeleteIcon
+						style={{ width: '8%', margin: 'auto' }}
+						onClick={this.handleDelete}
+					/>
+				</Fragment>
+			)
+		}
 		return (
 			<ListItem
 				style={listItemStyle}
@@ -63,8 +100,9 @@ class IndivisualFile extends Component {
 					primary={paste.url}
 					secondary={paste.date}
 				/>
+				{editAndDelete}
 				<ArrowDownward
-					style={iconStyle}
+					style={{ width: '32%', margin: 'auto' }}
 					onClick={this.downloadFile}
 				/>
 			</ListItem>
