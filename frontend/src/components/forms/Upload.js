@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -104,7 +104,7 @@ class UploadForm extends Component {
 		let color = 'white';
 		let backgroundColor = '#080809';
 		return (
-			<Fragment>
+			<div style={{ backgroundColor }}>
 				<Typography
 					variant="h4"
 					style={{ width: '100%', margin: '1% 0%', textAlign: 'center', color, fontFamily: "Roboto" }}
@@ -179,7 +179,7 @@ class UploadForm extends Component {
             			</Button>
 					</div>
 				</form>
-			</Fragment>
+			</div>
 		)
 	}
 }
@@ -217,7 +217,7 @@ UploadForm.propTypes = {
 };
 
 const mapStateToProps = state => {
-	return{
+	return {
 		username: state.username
 	}
 }

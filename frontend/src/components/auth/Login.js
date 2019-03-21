@@ -73,16 +73,20 @@ class Login extends Component {
 	}
 
 	render() {
+		let height = '92vh'
+		if (window.innerWidth < 500) {
+			height = '65vh'
+		}
 		return (
 			<div>
 				<Grid container spacing={0}>
 					<Grid item xs={12} md={6}>
-						<div style={{ backgroundColor: '#080809', width: '100%', height: '93vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-							<img src={Logo} alt='codebin' />
+						<div style={{ backgroundColor: '#080809', width: '100%', height, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+							<img src={Logo} alt='codebin' id='logo' />
 						</div>
 					</Grid>
 					<Grid item xs={12} md={6}>
-						<div className='box' style={{ backgroundColor: '#eeeeee', fontSize: '1.5em', width: '100%', height: '93vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+						<div className='box' style={{ backgroundColor: '#eeeeee', fontSize: '1.5em', width: '100%', height, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 							<h1>Login</h1>
 							<input type="text" name="username" placeholder="Username" style={{ fontSize: '1em' }} onChange={this.handleInput} />
 							<input type="password" name="password" placeholder="Password" style={{ fontSize: '1em' }} onChange={this.handleInput} />

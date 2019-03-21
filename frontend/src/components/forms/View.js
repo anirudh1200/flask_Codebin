@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import AceEditor from '../editor/AceEditor';
 
@@ -40,9 +40,10 @@ class View extends Component {
 	}
 
 	render() {
-		let color = 'white';
+		let color = '#eeeeee';
+		let backgroundColor = '#080809';
 		return (
-			<Fragment>
+			<div style={{ backgroundColor }}>
 				<Typography
 					variant="h4"
 					style={{ width: '100%', margin: '1% 0%', textAlign: 'center', color, fontFamily: "Roboto" }}
@@ -58,7 +59,7 @@ class View extends Component {
 						getDropdown={this.getDropdown}
 					/>
 				</div>
-			</Fragment>
+			</div>
 		)
 	}
 }

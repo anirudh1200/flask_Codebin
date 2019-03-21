@@ -16,7 +16,8 @@
 	text-align: center;
 	border: 2px solid #090910;
 	padding: 2% 2%;
-	width: 30%;
+	min-width: 250px;
+	width: 35%;
 	outline: none;
 	color: #eeeeee;
 	border-radius: 24px;
@@ -31,6 +32,7 @@
 	display: block;
 	margin: 20px auto;
 	text-align: center;
+	min-width: 150px;
 	padding: 2% 3%;
 	outline: none;
 	color: #eeeeee;
@@ -41,4 +43,8 @@
   .box input[type = "submit"]:hover{
 	background: #cc0000;
   }
-  
+
+
+#logo{
+	max-width: 300px;
+}

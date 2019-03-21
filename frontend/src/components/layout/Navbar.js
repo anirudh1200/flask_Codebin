@@ -13,7 +13,7 @@ function SimpleAppBar(props) {
   const [count, setCount] = useState('');
   let backgroundColor = '#080809';
   const handleClose = () => setCount('');
-  let right = window.innerWidth > 600 ? ['12%', '8%', '4%'] : ['16%', '100%', '5%'];
+  let right = window.innerWidth > 600 ? ['12%', '8%', '4%'] : ['12%', '100%', '2%'];
   let icons = null;
   if (props.login) {
     icons = (
@@ -43,7 +43,7 @@ function SimpleAppBar(props) {
         <Link to='/login' style={{ margin: 0, padding: 0 }}>
           <Fab
             aria-label="Add"
-            style={{ fontSize: '1em', textTransform: 'none', position: 'absolute', right: right[0], top: '5%', backgroundColor, color: '#eeeeee' }}
+            style={{ fontSize: '1em', textTransform: 'none', position: 'absolute', right: right[2], top: '5%', backgroundColor, color: '#eeeeee' }}
           >
             login
         </Fab>
