@@ -23,6 +23,7 @@ function SimpleAppBar(props) {
   const { classes } = props;
   let backgroundColor = '#080809';
   const handleClose = () => setCount('');
+  let right = window.innerWidth>600 ? ['12%', '8%', '4%'] : ['16%', '100%', '5%'];
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
@@ -33,19 +34,19 @@ function SimpleAppBar(props) {
             </Typography>
           </Link>
           <Link to='/panel' style={{ margin: 0, padding: 0 }}>
-            <Fab aria-label="Add" style={{ position: 'absolute', right: '12%', top: '5%', backgroundColor }}>
+            <Fab aria-label="Add" style={{ position: 'absolute', right: right[0], top: '5%', backgroundColor }}>
               <ListIcon style={{ color: 'white' }} />
             </Fab>
           </Link>
           <Fab
             aria-label="Add"
-            style={{ position: 'absolute', fontSize: '1.2em', right: '8%', top: '5%', backgroundColor, color: 'white' }}
+            style={{ position: 'absolute', fontSize: '1.2em', right: right[1], top: '5%', backgroundColor, color: 'white' }}
             onClick={() => setCount(<Info handleClose={handleClose} />)}
           >
             ℹ
             </Fab>
           <Link to='/uploadform' style={{ margin: 0, padding: 0 }}>
-            <Fab aria-label="Add" style={{ position: 'absolute', right: '4%', top: '5%', backgroundColor }}>
+            <Fab aria-label="Add" style={{ position: 'absolute', right: right[2], top: '5%', backgroundColor }}>
               <AddIcon style={{ color: 'white' }} />
             </Fab>
           </Link>

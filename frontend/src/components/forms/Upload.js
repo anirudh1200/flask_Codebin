@@ -156,7 +156,6 @@ class UploadForm extends Component {
 								input: classes.multilineColor,
 								root: classes.cssOutlinedInput,
 								focused: classes.cssFocused,
-								notchedOutline: classes.notchedOutline,
 								underline: classes.underline
 							}
 						}}
@@ -198,12 +197,9 @@ const styles = theme => ({
 	cssFocused: {},
 	cssOutlinedInput: {
 		color: 'white',
-		'&$cssFocused $notchedOutline': {
+		'&$cssFocused': {
 			borderColor: 'white',
 		},
-	},
-	notchedOutline: {
-		color: 'white'
 	},
 	underline: {
 		color: 'white',

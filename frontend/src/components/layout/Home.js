@@ -35,7 +35,7 @@ const Home = props => {
 						fontFamily: "Roboto",
 						fontSize: "12.5vh",
 						marginBottom: 15,
-						paddingTop: "30vh",
+						paddingTop: "22vh",
 						fontWeight: 'bold',
 						letterSpacing: '0.03em'
 					}}
