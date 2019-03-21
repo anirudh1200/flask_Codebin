@@ -21,7 +21,7 @@ class Login extends Component {
 		e.preventDefault();
 		if (this.validate()) {
 			let { status, ...data } = this.state;
-			fetch("http://localhost:5000/auth/login", {
+			fetch("/auth/login", {
 				method: 'POST',
 				headers: {
 					"Content-Type": "application/json;charset=UTF-8"

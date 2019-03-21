@@ -20,7 +20,7 @@ class Signin extends Component {
 		e.preventDefault();
 		if (this.validate()) {
 			let { status, ...data } = this.state;
-			fetch("http://localhost:5000/auth/signin", {
+			fetch("/auth/signin", {
 				method: 'POST',
 				headers: {
 					"Content-Type": "application/json;charset=UTF-8"
