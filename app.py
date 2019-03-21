@@ -2,7 +2,7 @@ import os
 import pydf
 import datetime
 from flask import Flask, request, render_template, jsonify, send_file, redirect
-# from flask_cors import CORS, cross_origin
+from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 from models import db, Paste, User
 from nocache import nocache
@@ -15,8 +15,8 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 # for development
-# cors = CORS(app)
-# app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 db.init_app(app)
 
 ALLOWED_EXTENSIONS = set([
@@ -230,14 +230,14 @@ def signin():
     username = request.get_json().get('username')
     password = request.get_json().get('password')
     if username is None or password is None:
-        abort(400)
+        return jsonify(({'login': False}))
     if User.query.filter_by(username=username).first() is not None:
-        return jsonify({'success': False, 'warning': 'username already exists'})
-    user = User(username=username)
-    user.hash_password(password)
-    db.session.add(User)
+        return jsonify({'login': False, 'status': 'username already exists'})
+    newUser = User(username=username)
+    newUser.hash_password(password)
+    db.session.add(newUser)
     db.session.commit()
-    return jsonify({'success': True})
+    return jsonify({'login': True})
 
 
 @app.route('/auth/login', methods=['POST'])

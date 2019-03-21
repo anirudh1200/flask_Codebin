@@ -40,9 +40,8 @@ class User(db.Model):
     username = db.Column(db.String(32), index=True)
     password_hash = db.Column(db.String(128))
 
-    def __init__(self, username, password):
+    def __init__(self, username):
         self.username = username
-        self.password = password
 
     def __repr__(self):
         return '<id {}>'.format(self.id)

@@ -13,6 +13,8 @@ import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import Avatar from '@material-ui/core/Avatar';
 import grey from '@material-ui/core/colors/grey';
+import Login from './components/auth/Login';
+import Signin from './components/auth/Signin';
 
 class App extends Component {
 
@@ -53,6 +55,14 @@ class App extends Component {
           <Route path='/view' component={View} />
           <Route exact path='/error' component={NotFound} />
           <Route exact path='/panel' component={PasteList} />
+          <Route
+            exact path='/login'
+            render={(routeProps) => (<Login {...routeProps} displayChip={this.displayChip} />)}
+          />
+                    <Route
+            exact path='/signin'
+            render={(routeProps) => (<Signin {...routeProps} displayChip={this.displayChip} />)}
+          />
           <Route
             exact path='/uploadform'
             render={(routeProps) => (<UploadForm {...routeProps} displayChip={this.displayChip} />)}
