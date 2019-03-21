@@ -1,12 +1,19 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CodeIcon from '@material-ui/icons/Code';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Typed from 'react-typed';
 import FileUpload from '../forms/FileUpload';
+import { connect } from 'react-redux';
 
 const Home = props => {
+	useEffect(() => {
+		props.showCodebin(false);
+		return () => {
+			props.showCodebin(true);
+		}
+	}, []);
 	const [opacity, setOpacity] = useState(0);
 	const [uploadFile, setUploadFile] = useState('');
 	const [transformL, setTransformL] = useState('-800');
@@ -16,7 +23,11 @@ const Home = props => {
 	setTimeout(() => setTransformR('0'), 50);
 	let backgroundColor = '#080809';
 	const redirectToUpload = () => {
-		props.history.push('/uploadform');
+		if (props.login) {
+			props.history.push('/uploadform');
+			return;
+		}
+		props.history.push('/login');
 	}
 	return (
 		<Fragment>
@@ -80,8 +91,11 @@ const Home = props => {
 				</Button>
 				<Button
 					onClick={() => {
-						console.log('a');
-						setUploadFile(<FileUpload />)
+						if (props.login) {
+							setUploadFile(<FileUpload />);
+							return;
+						}
+						props.history.push('/login');
 					}}
 					size='large'
 					style={{
@@ -112,4 +126,16 @@ const Home = props => {
 	);
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+	return {
+		login: state.login
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		showCodebin: (visibility) => dispatch({ type: 'CODEBIN', showCodebin: visibility })
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

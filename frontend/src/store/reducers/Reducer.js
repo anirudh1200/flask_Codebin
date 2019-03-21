@@ -1,6 +1,7 @@
 const initState = {
 	login: false,
-	username: ''
+	username: '',
+	showCodebin: true
 }
 
 const Reducer = (state = initState, action) => {
@@ -16,6 +17,11 @@ const Reducer = (state = initState, action) => {
 				...state,
 				login: false,
 				username: ''
+			}
+		case 'CODEBIN':
+			return {
+				...state,
+				showCodebin: action.showCodebin
 			}
 		default:
 			return state;

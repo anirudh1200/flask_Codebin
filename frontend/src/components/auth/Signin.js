@@ -82,11 +82,11 @@ class Signin extends Component {
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<div className='box' style={{ backgroundColor: '#eeeeee', fontSize: '1.5em', width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-							<h1>Signin</h1>
+							<h1>Sign In</h1>
 							<input type="text" name="username" placeholder="Username" style={{ fontSize: '1em' }} onChange={this.handleInput} />
 							<input type="password" name="password" placeholder="Password" style={{ fontSize: '1em' }} onChange={this.handleInput} />
-							<div style={{ color: 'red' }}>{this.state.status}</div>
-							<input type="submit" value="Login" style={{ fontSize: '1em' }} onClick={this.handleSubmit} />
+							<div style={{ color: 'red', fontSize: '0.8em' }}>{this.state.status}</div>
+							<input type="submit" value="SignIn" style={{ fontSize: '1em' }} onClick={this.handleSubmit} />
 						</div>
 					</Grid>
 				</Grid>
