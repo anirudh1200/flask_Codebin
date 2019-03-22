@@ -21,6 +21,13 @@ class App extends Component {
     chip: ''
   }
 
+  componentDidMount = () => {
+    var preloader = document.querySelector('.wrap');
+    if(preloader){
+      preloader.remove();
+    }
+  }
+
   createChip = ({ type, displayText }) => {
     if (type === 'success') {
       return <Chip

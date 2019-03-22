@@ -33,6 +33,7 @@ six = "*"
 SQLAlchemy = "*"
 Werkzeug = "*"
 passlib = "*"
+flask-compress = "*"
 
 [requires]
 python_version = "3.6"

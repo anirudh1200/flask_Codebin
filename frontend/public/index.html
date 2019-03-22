@@ -21,7 +21,7 @@
     -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <script src="/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/ace/ace.js" type="text/javascript" charset="utf-8" async></script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -32,10 +32,79 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>CodeBin</title>
+    <style>
+      body {
+        position: relative; 
+        width: 100%;
+        height: 100vh;
+        background: #080809;
+        font-size: 2em;
+      }
+
+      .none {
+        display: none;
+      }
+
+      .wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: Roboto;
+      }
+
+      .text {
+        color: #eeeeee;
+        display: inline-block;
+        margin-left: 5px;
+      }
+
+      .bounceball {
+        position: relative;
+        display: inline-block;
+        height: 37px;
+        width: 15px;
+      }
+      .bounceball:before {
+        position: absolute;
+        content: "";
+        display: block;
+        top: 0;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #eeeeee;
+        transform-origin: 50%;
+        animation: bounce 500ms alternate infinite ease;
+      }
+
+      @keyframes bounce {
+        0% {
+          top: 30px;
+          height: 5px;
+          border-radius: 60px 60px 20px 20px;
+          transform: scaleX(2);
+        }
+        35% {
+          height: 15px;
+          border-radius: 50%;
+          transform: scaleX(1);
+        }
+        100% {
+          top: 0;
+        }
+      }
+    </style>
   </head>
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="wrap">
+      <div class="loading">
+        <div class="bounceball"></div>
+        <div class="text">codebin is loading</div>
+      </div>
+    </div>
     <div id="root"></div>
     <!--
       This HTML file is a template.

@@ -6,6 +6,7 @@ from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 from models import db, Paste, User
 from nocache import nocache
+from flask_compress import Compress
 
 
 app = Flask(__name__, static_folder='./build/static',
@@ -18,6 +19,7 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 db.init_app(app)
+Compress(app)
 
 ALLOWED_EXTENSIONS = set([
     'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'ppt', 'doc',
