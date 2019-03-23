@@ -48,6 +48,7 @@ class PasteList extends Component {
 						history={this.props.history}
 						username={this.props.username}
 						displayChip={this.props.displayChip}
+						handleDelete={this.handleDelete}
 					/>
 				)
 			} else {
@@ -64,7 +65,7 @@ class PasteList extends Component {
 			}
 		});
 		return (
-			<div style={{ backgroundColor: '#fafaff', height: '100%' }}>
+			<div style={{ backgroundColor: '#fafaff', height: '93vh' }}>
 				<div style={{ margin: '0% 5%' }}>
 					<List style={{ width: '100%' }}>
 						<ListItem>

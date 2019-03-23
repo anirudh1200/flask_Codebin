@@ -62,7 +62,7 @@ function SimpleAppBar(props) {
     )
   }
   return (
-    <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center', height: '7vh' }}>
       <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
         <Toolbar style={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
           {showCodebin}

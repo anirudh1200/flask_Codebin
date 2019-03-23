@@ -17,8 +17,13 @@ class AceEditor extends Component {
     editor.setTheme("ace/theme/dark");
     editor.getSession().setMode(`ace/mode/plain_text`);
     editor.setShowPrintMargin(false);
-    editor.setOptions({ minLines: this.props.numberOfLines });
-    editor.setOptions({ maxLines: this.props.numberOfLines });
+    if (window.innerWidth < 600) {
+      editor.setOptions({ minLines: this.props.numberOfLines-10 });
+      editor.setOptions({ maxLines: this.props.numberOfLines-10 });
+    } else {
+      editor.setOptions({ minLines: this.props.numberOfLines });
+      editor.setOptions({ maxLines: this.props.numberOfLines });
+    }
     editor.setOption('fontSize', 18);
     editor.setValue(this.state.editorText, -1);
     this.props.getEditor(editor);
